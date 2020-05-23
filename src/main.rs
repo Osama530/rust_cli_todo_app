@@ -98,6 +98,12 @@ impl Todo_List {
     fn remove(&mut self, index: usize) {
         self.list.remove(index);
     }
+
+    fn edit(&mut self, index: usize, content: String){
+        self.list[index].name = content;
+    }
+    
+
 }
 
 enum Commands {
@@ -105,6 +111,8 @@ enum Commands {
     Add(String),
     Done(usize),
     Remove(usize),
+    Edit(usize,String),
+
 }
 fn main() {
     //*************collecting data frome cli **************/
@@ -115,6 +123,7 @@ fn main() {
         "add" => Commands::Add(arrgs[2].clone()),
         "done" => Commands::Done(arrgs[2].parse().unwrap()),
         "remove" => Commands::Remove(arrgs[2].parse().unwrap()),
+        "edit" => Commands::Edit(arrgs[2].parse().unwrap(), arrgs[3].parse().unwrap()),
         _ => panic!("you must enter proper command"),
     };
     //println!("{:?}",command);
@@ -159,6 +168,10 @@ fn main() {
         }
         Commands::Remove(index) => {
             list.remove(index);
+            list.print();
+        }
+        Commands::Edit(index,content) => {
+            list.edit(index,content);
             list.print();
         }
     }
